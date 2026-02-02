@@ -1,0 +1,4 @@
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+.navbar-brand { font-weight: bold; text-transform: uppercase; }
+.card { border: none; border-radius: 10px; }
+.status-select { font-weight: 600; }

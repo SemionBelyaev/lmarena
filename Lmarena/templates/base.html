@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Sightseeing | Operations</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-red: #E30613;
+            --brand-dark: #1F2937;
+            --text-grey: #6B7280;
+            --bg-body: #F3F4F6;
+            --bg-card: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Inter', sans-serif;
+            color: var(--brand-dark);
+        }
+
+        /* Навигация */
+        .navbar {
+            background-color: var(--brand-red); /* Красный фон как на скрине */
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            color: white !important;
+            letter-spacing: -0.5px;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-left: 1rem;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { color: white !important; }
+        
+        /* Активная вкладка */
+        .nav-link.active {
+            color: white !important;
+            font-weight: 700;
+            border-bottom: 2px solid white;
+        }
+
+        .btn-logout {
+            background-color: white;
+            color: var(--brand-red);
+            font-weight: 600;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .btn-logout:hover { background-color: #f0f0f0; }
+
+        /* Карточки */
+        .card {
+            background: var(--bg-card);
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
+        .card-header {
+            background: transparent;
+            border-bottom: 1px solid #F3F4F6;
+            padding: 1.2rem 1.5rem;
+            font-weight: 700;
+            color: var(--brand-dark);
+        }
+        .card-body { padding: 1.5rem; }
+
+        /* Стили для канбана и чата наследуются */
+        .kanban-col { background-color: #F9FAFB; border-radius: 12px; padding: 12px; min-height: 500px; }
+        .kanban-card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; cursor: grab; }
+        .kanban-card[data-priority="high"] { border-left: 3px solid var(--brand-red); }
+        .price-tag { background: #EFF6FF; color: #2563EB; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+        .chat-container { background-color: #F9FAFB; border-radius: 12px; padding: 16px; height: 350px; overflow-y: auto; }
+        .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; margin-bottom: 8px; max-width: 85%; }
+        .msg-in { background: white; float: left; clear: both; }
+        .msg-out { background: var(--brand-red); color: white; float: right; clear: both; }
+        .btn-brand { background-color: var(--brand-red); color: white; border-radius: 8px; border: none; padding: 0.5rem 1.2rem; }
+        .btn-brand:hover { background-color: #c90511; color: white; }
+    </style>
+</head>
+<body>
+    
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fa fa-bus me-2"></i>City Sightseeing
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    
+                    <!-- ССЫЛКИ НА СТРАНИЦЫ -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Дашборд</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'bookings_page' %}active{% endif %}" href="{{ url_for('bookings_page') }}">Заявки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'finance_page' %}active{% endif %}" href="{{ url_for('finance_page') }}">Финансы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'settings_page' %}active{% endif %}" href="{{ url_for('settings_page') }}">Настройки</a>
+                    </li>
+
+                    <li class="nav-item ps-3">
+                        <button class="btn-logout"><i class="fa fa-sign-out-alt me-1"></i> Выйти</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold">Все заявки</h4>
+    <button class="btn btn-brand"><i class="fa fa-download me-2"></i>Экспорт в Excel</button>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-4">ID</th>
+                    <th>Клиент</th>
+                    <th>Тур</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td class="ps-4 text-muted">#{{ b.id }}</td>
+                    <td class="fw-bold">{{ b.client_name }} <br><small class="text-muted fw-normal">{{ b.client_phone }}</small></td>
+                    <td>{{ b.tour_type }}</td>
+                    <td>{{ b.tour_date.strftime('%d.%m.%Y') }}</td>
+                    <td>
+                        {% if b.status == 'new' %}<span class="badge bg-warning text-dark">Новая</span>
+                        {% elif b.status == 'paid' %}<span class="badge bg-success">Оплачена</span>
+                        {% else %}<span class="badge bg-secondary">{{ b.status }}</span>{% endif %}
+                    </td>
+                    <td class="fw-bold">{{ "{:,.0f}".format(b.price) }} ₽</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

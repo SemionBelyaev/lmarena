@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4 class="fw-bold mb-4">Финансовый отчет</h4>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center p-4 border-success border-2">
+            <h6 class="text-muted">Общая выручка</h6>
+            <h2 class="text-success fw-bold">{{ "{:,.0f}".format(income) }} ₽</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4 border-danger border-2">
+            <h6 class="text-muted">Расходы</h6>
+            <h2 class="text-danger fw-bold">{{ "{:,.0f}".format(expenses) }} ₽</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4 bg-light">
+            <h6 class="text-muted">Прибыль</h6>
+            <h2 class="text-primary fw-bold">{{ "{:,.0f}".format(income - expenses) }} ₽</h2>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">История транзакций</div>
+    <div class="card-body text-center text-muted py-5">
+        <i class="fa fa-list fa-3x mb-3"></i>
+        <p>Здесь будет список всех транзакций из 1С или банка.</p>
+    </div>
+</div>
+{% endblock %}
